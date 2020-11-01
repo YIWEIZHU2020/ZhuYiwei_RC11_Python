@@ -19,16 +19,43 @@ class ArtTate:
         self.imageUrl = imageUrl
         self.artist = artist
         self.imagePath = ''
-
-    # Define a function that prints a description
+# Define a function that prints a description
     def describe(self):
+print("artist:" + self.artist, "id:" + self.id, "width:" + str(self.width), "depth:" + str(self.depth), "height:" + str(self.height))
         # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+
 
     # implement the get image function that saves the image to the specified folder
     def getImageFile(self):
+            if self.imageUrl:
+                response = requests.get(self.imageUrl)
+                try:
+                    im = Image.open(BytesIO(response.content))
+                except OSError:
+                    return None
+                path = assignment1/resource/ArtImages/
+                self.imagePath = path
+                im.save(path, "JPEG")
         # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+artPieces = []
+with open(assignment1/resource/CSVfiles/artwork_data/, encoding = 'utf-8-sig') as artFile:
+    artReader = csv.DictReader(artFile)
+
+    for row in artReader:
+        id = row['ObjectID']
+        width = row['Width (cm)']
+        height = row['Height (cm)']
+        depth = row['Depth (cm)']
+        imageUrl = row['ThumbnailURL']
+        artist = row['Artist']
+        if width or depth or height:
+            artPiece = ArtMoMA(id, width, depth, height, imageUrl, artist)
+            artPieces.append(artPiece)
+
+for art in artPieces:
+    if "Abakanowicz" in art.artist:
+        art.getImageFile()
+
 
 # Read in the rows of the artwork_data.csv file into a list of ArtTate objects
 
