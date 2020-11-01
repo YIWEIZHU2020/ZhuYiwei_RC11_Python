@@ -10,9 +10,15 @@ from io import BytesIO
 # Define the ArtTate class, with all attributes that you find usefull
 class ArtTate:
     # Define the initialise function accordingly
-    def __init__(self):
+    def __init__(self,id, width, depth, height, imageUrl, artist):
         # delete pass when you start editing, this is a placeholder keyword to say that nothing happens
-        pass
+        self.id = id
+        self.width = width
+        self.depth = depth
+        self.height = height
+        self.imageUrl = imageUrl
+        self.artist = artist
+        self.imagePath = ''
 
     # Define a function that prints a description
     def describe(self):
